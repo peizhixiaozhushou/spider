@@ -147,9 +147,8 @@ public class ConfigPlain extends Spider {
 
     /** 首页配置分区表（上游 {@code new JSONObject("...")} 字面量，键=显示名、值=type_id） */
     public static final String SECTIONS_JSON =
-            "{\"综合配置\":\"other\",\"夸克网盘配置\":\"quark\",\"UC网盘配置\":\"uc\","
-                    + "\"百度网盘配置\":\"baidu\",\"迅雷云盘配置\":\"xunlei\",\"光鸭云盘配置\":\"guangya\","
-                    + "\"天翼云盘配置\":\"cloud189\",\"123云盘配置\":\"cloud123\",\"阿里云盘配置\":\"alipan\","
+            "{\"综合配置\":\"other\",\"夸克网盘配置\":\"quark\","
+                    + "\"百度网盘配置\":\"baidu\","
                     + "\"哔哩配置\":\"bili\",\"重置配置\":\"recovery\"}";
 
     /**
@@ -172,47 +171,34 @@ public class ConfigPlain extends Spider {
      * 并由 {@link #sectionsNotOrdered()} + 测试断言保证"字面量里的键一个都不漏"。
      */
     public static final String[] SECTION_ORDER = {
-            "综合配置", "夸克网盘配置", "UC网盘配置", "百度网盘配置", "迅雷云盘配置",
-            "光鸭云盘配置", "天翼云盘配置", "123云盘配置", "阿里云盘配置", "哔哩配置",
-            "重置配置",
+            "综合配置", "夸克网盘配置", "百度网盘配置", "哔哩配置", "重置配置",
     };
 
-    /** 登录态 / 配置文件（外部存储 {@code /sdcard/TVBox/} 下，上游 {@code k.b(...)}） */
-    public static final String FILE_ALI = "/aliyun.txt";
+    /**
+     * 登录态 / 配置文件（外部存储 {@code /sdcard/TVBox/} 下，上游 {@code k.b(...)}）。
+     *
+     * <p>上游这里还有 {@code /aliyun.txt}、{@code /uc_cookie.txt}、{@code /uc_token.txt}、
+     * {@code /xunlei.txt}、{@code /guangya.txt}、{@code /cloud189.txt}、
+     * {@code /cloud123.txt}，以及迅雷/光鸭的两个隐藏开关
+     * （{@code free_thunder} / {@code free_guangya}）。
+     * 这些网盘已不在本项目范围内，常量与对应的清理动作一并删除，
+     * 见 {@code maintain/evidence/SCOPE_QUARK_BAIDU.md}。
+     *
+     * <p>哔哩是<b>内容站</b>不是云盘，故保留。
+     */
     public static final String FILE_QUARK_COOKIE = "/quark_cookie.txt";
-    public static final String FILE_UC_COOKIE = "/uc_cookie.txt";
-    public static final String FILE_UC_TOKEN = "/uc_token.txt";
     public static final String FILE_BAIDU = "/baidu.txt";
-    public static final String FILE_XUNLEI = "/xunlei.txt";
-    public static final String FILE_GUANGYA = "/guangya.txt";
-    public static final String FILE_CLOUD189 = "/cloud189.txt";
-    public static final String FILE_CLOUD123 = "/cloud123.txt";
     public static final String FILE_BILI_COOKIE = "/bili_cookie.txt";
-    /** 迅雷/光鸭的额外隐藏文件（上游唯一两个"真正"非空的第二参数） */
-    public static final String FILE_FREE_THUNDER = "free_thunder";
-    public static final String FILE_FREE_GUANGYA = "free_guangya";
 
-    /** 51shazhu CDN 上的设置项图标（上游硬编码，逐个保留原文） */
-    public static final String PIC_ALI =
-            "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI"
-                    + "/20260503/8Yr6/1200X800/aliyun.jpg/webp";
+    /**
+     * 51shazhu CDN 上的设置项图标（上游硬编码，逐个保留原文）。
+     * <p>阿里/UC/天翼/123/迅雷/光鸭 6 家的图标常量随其面板一起删除 ——
+     * 面板没了，图标不会再被引用。
+     */
     public static final String PIC_QUARK =
             "https://img.51shazhu.com/autoupload/g1b6f/20260807/bsds/1200X800/quark.jpg/webp";
-    public static final String PIC_UC =
-            "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI"
-                    + "/20260503/kbEn/1200X800/uc.jpg/webp";
-    public static final String PIC_CLOUD189 =
-            "https://img.51shazhu.com/autoupload/g1b6f/20260807/kltE/1200X800/189.jpg/webp";
-    public static final String PIC_CLOUD123 =
-            "https://img.51shazhu.com/autoupload/g1b6f/20260806/bp2h/1200X800/123.jpg/webp";
     public static final String PIC_BAIDU =
             "https://img.51shazhu.com/autoupload/g1b6f/20260806/V6JN/1200X800/baidu.jpg/webp";
-    public static final String PIC_XUNLEI =
-            "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI"
-                    + "/20260623/4oPO/1200X800/xunlei.jpg/webp";
-    public static final String PIC_GUANGYA =
-            "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI"
-                    + "/20260625/kqrL/1200X800/guangya.jpg/webp";
     public static final String PIC_BILI =
             "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI"
                     + "/20260503/3lGI/1200X800/bili.jpg/webp";
@@ -295,9 +281,6 @@ public class ConfigPlain extends Spider {
 
         /** 备份配置（上游 {@code merge.m.H.backupsConfig()}） */
         void backupConfig();
-
-        /** 清除 UC TV Token（上游 {@code merge.m.A.t().D()}） */
-        void clearUcToken();
 
         /**
          * 异步执行（上游 {@code Init.execute(Runnable)}，5 线程池）。
@@ -426,11 +409,6 @@ public class ConfigPlain extends Spider {
         @Override
         public void backupConfig() {
             Log.i(TAG, "backupsConfig (无宿主，降级为日志)");
-        }
-
-        @Override
-        public void clearUcToken() {
-            Log.i(TAG, "clearUcToken (无宿主，降级为日志)");
         }
 
         @Override
@@ -626,53 +604,12 @@ public class ConfigPlain extends Spider {
     }
 
     /**
-     * 123 云盘画质选项。
-     *
-     * @return 单元素列表：{@code 123无限} 或 {@code 123原画}
-     */
-    public static List<String> get123Options() {
-        return switchOptions("123Quality", "123原画", "123无限");
-    }
-
-    /**
-     * 阿里云盘画质选项（支持 {@code "阿里原画|阿里普画"} 双启用）。
-     *
-     * @return 1~2 个元素的列表
-     */
-    public static List<String> getAliOptions() {
-        Map<String, List<String>> t = new LinkedHashMap<>();
-        t.put("阿里原画", one("阿里原画"));
-        t.put("阿里普画", one("阿里普画"));
-        t.put("阿里原画|阿里普画", two("阿里原画", "阿里普画"));
-        t.put("阿里普画|阿里原画", two("阿里普画", "阿里原画"));
-        return tableOptions("aliQuality", "阿里原画", t);
-    }
-
-    /**
      * 百度网盘画质选项。
      *
      * @return 单元素列表：{@code 百度无限} 或 {@code 百度原画}
      */
     public static List<String> getBaiduOptions() {
         return switchOptions("baiduQuality", "百度原画", "百度无限");
-    }
-
-    /**
-     * 光鸭云盘画质选项（上游固定单值，不读配置）。
-     *
-     * @return {@code [光鸭原画]}
-     */
-    public static List<String> getGuangyaOptions() {
-        return one("光鸭原画");
-    }
-
-    /**
-     * 移动云盘画质选项（上游固定单值，不读配置）。
-     *
-     * @return {@code [移动普画]}
-     */
-    public static List<String> getMobileOptions() {
-        return one("移动普画");
     }
 
     /**
@@ -694,15 +631,6 @@ public class ConfigPlain extends Spider {
     }
 
     /**
-     * 本机 UC 画质选项（上游固定单值）。
-     *
-     * @return {@code [UC原画]}
-     */
-    public static List<String> getMyUCOptions() {
-        return one("UC原画");
-    }
-
-    /**
      * 夸克网盘画质选项（三种单值 + 两种双启用）。
      *
      * @return 1~2 个元素的列表
@@ -715,39 +643,6 @@ public class ConfigPlain extends Spider {
         t.put("夸克原画|夸克普画", two("夸克原画", "夸克普画"));
         t.put("夸克普画|夸克原画", two("夸克普画", "夸克原画"));
         return tableOptions("quarkQuality", "夸克原画", t);
-    }
-
-    /**
-     * 天翼云盘画质选项（上游固定单值）。
-     *
-     * @return {@code [天翼原画]}
-     */
-    public static List<String> getTianyiOptions() {
-        return one("天翼原画");
-    }
-
-    /**
-     * UC 网盘画质选项（三种单值 + 两种双启用）。
-     *
-     * @return 1~2 个元素的列表
-     */
-    public static List<String> getUCOptions() {
-        Map<String, List<String>> t = new LinkedHashMap<>();
-        t.put("UC原画", one("UC原画"));
-        t.put("UC普画", one("UC普画"));
-        t.put("UC无限", one("UC无限"));
-        t.put("UC原画|UC普画", two("UC原画", "UC普画"));
-        t.put("UC普画|UC原画", two("UC普画", "UC原画"));
-        return tableOptions("ucQuality", "UC原画", t);
-    }
-
-    /**
-     * 迅雷云盘画质选项（上游固定单值）。
-     *
-     * @return {@code [迅雷原画]}
-     */
-    public static List<String> getXunleiOptions() {
-        return one("迅雷原画");
     }
 
     /** 单元素列表工具 */
@@ -965,15 +860,7 @@ public class ConfigPlain extends Spider {
         }
         String act = hostSupportsAction ? "1" : "";
 
-        if ("alipan".equals(tid)) {
-            String ali = Account.aliNickname(host().read(FILE_ALI));
-            out.add(item("newaliyun", "阿里个人中心", PIC_ALI, blankTo(ali, "未登录"), act));
-            out.add(item("100", "设置阿里Token", PIC_ALI, "点击设置", act));
-            out.add(item("200", "清除阿里Token", PIC_ALI, "双击清除", act));
-            out.add(item("aliQuality", "阿里云盘画质", PIC_ALI, cfgValue("aliQuality", "阿里原画"), act));
-            out.add(item("aliThread", "阿里云盘线程", PIC_ALI,
-                    "当前线程:" + cfgValue("aliThread", ""), act));
-        } else if ("quark".equals(tid)) {
+        if ("quark".equals(tid)) {
             String nick = Account.nickname(host().read(FILE_QUARK_COOKIE));
             out.add(item("newquark", "夸克个人中心", PIC_QUARK, blankTo(nick, "未登录"), act));
             out.add(item("300", "设置夸克Cookie", PIC_QUARK, "点击设置", act));
@@ -983,30 +870,6 @@ public class ConfigPlain extends Spider {
             out.add(item("quarkThread", "夸克网盘线程", PIC_QUARK,
                     "当前线程:" + cfgValue("quarkThread", ""), act));
             out.add(item("quarktip", "夸克网盘帮助", PIC_QUARK, "点击查看", act));
-        } else if ("uc".equals(tid)) {
-            String nick = Account.nickname(host().read(FILE_UC_COOKIE));
-            out.add(item("newuc", "UC个人中心", PIC_UC, blankTo(nick, "未登录"), act));
-            out.add(item("500", "设置UC Cookie", PIC_UC, "点击设置", act));
-            out.add(item("uctoken", "设置UC TV Token", PIC_UC, "点击设置", act));
-            out.add(item("600", "清除UC Cookie", PIC_UC, "双击清除", act));
-            out.add(item("600token", "清除UC TV Token", PIC_UC, "双击清除", act));
-            out.add(item("ucQuality", "UC网盘画质", PIC_UC, cfgValue("ucQuality", "UC无限"), act));
-            out.add(item("ucThread", "UC网盘线程", PIC_UC,
-                    "当前线程:" + cfgValue("ucThread", ""), act));
-            out.add(item("uctip", "UC网盘帮助", PIC_UC, "点击查看", act));
-        } else if ("cloud189".equals(tid)) {
-            String acct = Account.userAccount(host().read(FILE_CLOUD189));
-            out.add(item("new189", "天翼个人中心", PIC_CLOUD189, blankTo(acct, "未登录"), act));
-            out.add(item("c500", "设置天翼账号密码", PIC_CLOUD189, "点击设置", act));
-            out.add(item("c400", "清除天翼Token", PIC_CLOUD189, "双击清除", act));
-            out.add(item("189tip", "天翼云盘帮助", PIC_CLOUD189, "点击查看", act));
-        } else if ("cloud123".equals(tid)) {
-            String nick = Account.nickname(host().read(FILE_CLOUD123));
-            out.add(item("new123", "123个人中心", PIC_CLOUD123, blankTo(nick, "未登录"), act));
-            out.add(item("p300", "设置123账号密码", PIC_CLOUD123, "点击设置", act));
-            out.add(item("p400", "清除123 Token", PIC_CLOUD123, "双击清除", act));
-            out.add(item("123Quality", "123云盘画质", PIC_CLOUD123,
-                    cfgValue("123Quality", "123无限"), act));
         } else if ("baidu".equals(tid)) {
             String user = Account.userName(host().read(FILE_BAIDU));
             out.add(item("newbaidu", "百度个人中心", PIC_BAIDU, blankTo(user, "未登录"), act));
@@ -1016,18 +879,6 @@ public class ConfigPlain extends Spider {
                     cfgValue("baiduQuality", "百度无限"), act));
             out.add(item("baiduThread", "百度网盘线程", PIC_BAIDU,
                     "当前线程:" + cfgValue("baiduThread", ""), act));
-        } else if ("xunlei".equals(tid)) {
-            String user = Account.userName(host().read(FILE_XUNLEI));
-            out.add(item("newxunlei", "迅雷个人中心", PIC_XUNLEI, blankTo(user, "未登录"), act));
-            out.add(item("x300", "设置迅雷Token", PIC_XUNLEI, "点击设置", act));
-            out.add(item("x400", "清除迅雷Token", PIC_XUNLEI, "双击清除", act));
-            out.add(item("xunleiThread", "迅雷云盘线程", PIC_XUNLEI,
-                    "当前线程:" + cfgValue("xunleiThread", ""), act));
-        } else if ("guangya".equals(tid)) {
-            String user = Account.userName(host().read(FILE_GUANGYA));
-            out.add(item("newguangya", "光鸭个人中心", PIC_GUANGYA, blankTo(user, "未登录"), act));
-            out.add(item("g300", "设置光鸭Token", PIC_GUANGYA, "点击设置", act));
-            out.add(item("g400", "清除光鸭Token", PIC_GUANGYA, "双击清除", act));
         } else if ("bili".equals(tid)) {
             String nick = Account.nickname(host().read(FILE_BILI_COOKIE));
             out.add(item("newbili", "哔哩个人中心", PIC_BILI, blankTo(nick, "未登录"), act));
@@ -1134,32 +985,23 @@ public class ConfigPlain extends Spider {
 
     // ── 动作分派（上游 private void p(String)） ───────────────
 
-    /** 12 个"打开设置页 + 提示语"动作（上游的 if 链） */
+    /** "打开设置页 + 提示语"动作（上游 12 条；本项目只留夸克/百度两条扫码 + 哔哩 + 帮助） */
     private static final Map<String, String[]> TIPS = new LinkedHashMap<>();
 
-    /** 28 个"直接把 id 当 site 打开配置页"的动作（上游那一长串 {@code !...equals} 白名单） */
+    /** "直接把 id 当 site 打开配置页"的动作（上游 28 条；随网盘面板一并收窄） */
     private static final Set<String> PAGE_SITES = new LinkedHashSet<>();
 
     static {
-        TIPS.put("100", new String[]{"ali", "请使用阿里云盘扫描二维码"});
         TIPS.put("300", new String[]{"quark", "请使用夸克浏览器扫描二维码"});
-        TIPS.put("500", new String[]{"uc", "请使用UC浏览器扫描二维码"});
-        TIPS.put("700", new String[]{"bili", "请使用哔哩哔哩扫描二维码"});
         TIPS.put("b300", new String[]{"baidu", "请使用百度网盘扫描二维码"});
-        TIPS.put("x300", new String[]{"xunlei", "请使用迅雷扫描二维码"});
-        TIPS.put("g300", new String[]{"guangya", "请使用光鸭云盘扫描二维码"});
-        TIPS.put("c500", new String[]{"cloud189", "请输入天翼云盘账号密码"});
-        TIPS.put("p300", new String[]{"cloud123", "请输入123云盘账号密码"});
+        TIPS.put("700", new String[]{"bili", "请使用哔哩哔哩扫描二维码"});
         TIPS.put("quarktip", new String[]{"quarktip", "夸克网盘帮助"});
-        TIPS.put("uctip", new String[]{"uctip", "UC网盘帮助"});
-        TIPS.put("189tip", new String[]{"189tip", "天翼账号无法登录？"});
 
         PAGE_SITES.addAll(Arrays.asList(
                 "homePage", "danmuSetting", "panOrder", "pansou", "panView", "proxyMode",
-                "backup", "aliThread", "quarkThread", "ucThread", "baiduThread", "xunleiThread",
-                "guangyaThread", "aliQuality", "quarkQuality", "ucQuality", "baiduQuality",
-                "123Quality", "update", "newaliyun", "newquark", "newuc", "newbaidu", "newxunlei",
-                "newguangya", "new189", "new123", "newbili"));
+                "backup", "quarkThread", "baiduThread",
+                "quarkQuality", "baiduQuality",
+                "update", "newquark", "newbaidu", "newbili"));
     }
 
     /**
@@ -1185,28 +1027,12 @@ public class ConfigPlain extends Spider {
             host().openConfigPage(id, "");
             return;
         }
-        if ("200".equals(id)) {
-            clearFileWithDoubleCheck(FILE_ALI, "");
-        } else if ("400".equals(id)) {
+        if ("400".equals(id)) {
             clearFileWithDoubleCheck(FILE_QUARK_COOKIE, "");
-        } else if ("c400".equals(id)) {
-            clearFileWithDoubleCheck(FILE_CLOUD189, "");
-        } else if ("p400".equals(id)) {
-            clearFileWithDoubleCheck(FILE_CLOUD123, "");
         } else if ("b400".equals(id)) {
             clearFileWithDoubleCheck(FILE_BAIDU, "");
-        } else if ("x400".equals(id)) {
-            clearFileWithDoubleCheck(FILE_XUNLEI, FILE_FREE_THUNDER);
-        } else if ("g400".equals(id)) {
-            clearFileWithDoubleCheck(FILE_GUANGYA, FILE_FREE_GUANGYA);
-        } else if ("600".equals(id)) {
-            clearFileWithDoubleCheck(FILE_UC_COOKIE, "");
-        } else if ("600token".equals(id)) {
-            clearFileWithDoubleCheck(FILE_UC_TOKEN, "");
         } else if ("800".equals(id)) {
             clearFileWithDoubleCheck(FILE_BILI_COOKIE, "");
-        } else if ("uctoken".equals(id)) {
-            host().clearUcToken();
         } else if ("cleandanmu".equals(id)) {
             if (confirmDoubleClick()) {
                 host().clearDanmu();
@@ -1265,28 +1091,15 @@ public class ConfigPlain extends Spider {
         host().toast(clearMessage(display));
     }
 
-    /** 清理提示映射表（上游 {@code merge.m.I.i(String)} 的 18 条分支） */
+    /** 清理提示映射表（上游 18 条；只留夸克/百度/哔哩） */
     private static final Map<String, String> CLEAR_MESSAGES = new LinkedHashMap<>();
 
     static {
-        CLEAR_MESSAGES.put("aliyun.txt", "已清除阿里Token");
         CLEAR_MESSAGES.put("quark_cookie.txt", "已清除夸克Cookie");
-        CLEAR_MESSAGES.put("uc_cookie.txt", "已清除UC Cookie");
-        CLEAR_MESSAGES.put("uc_token.txt", "已清除UC TV Token");
         CLEAR_MESSAGES.put("baidu.txt", "已清除百度Cookie");
-        CLEAR_MESSAGES.put("xunlei.txt", "已清除迅雷Token");
-        CLEAR_MESSAGES.put("guangya.txt", "已清除光鸭Token");
-        CLEAR_MESSAGES.put("cloud189.txt", "已清除天翼Token");
-        CLEAR_MESSAGES.put("cloud123.txt", "已清除123 Token");
         CLEAR_MESSAGES.put("bili_cookie.txt", "已清除哔哩Cookie");
-        CLEAR_MESSAGES.put("ali", "还未登录阿里账号,请前往【配置中心】登录");
         CLEAR_MESSAGES.put("quark", "还未登录夸克账号,请前往【配置中心】登录");
-        CLEAR_MESSAGES.put("uc", "还未登录UC账号,请前往【配置中心】登录");
         CLEAR_MESSAGES.put("baidu", "还未登录百度账号,请前往【配置中心】登录");
-        CLEAR_MESSAGES.put("xunlei", "还未登录迅雷账号,请前往【配置中心】登录");
-        CLEAR_MESSAGES.put("guangya", "还未登录光鸭账号,请前往【配置中心】登录");
-        CLEAR_MESSAGES.put("189", "还未登录天翼账号,请前往【配置中心】登录");
-        CLEAR_MESSAGES.put("123", "还未登录123账号,请前往【配置中心】登录");
     }
 
     /**

@@ -12,21 +12,20 @@ import java.util.regex.Pattern;
 /**
  * 网盘链接排序器 —— 按配置顺序给网盘链接排序。
  *
- * <p>用途：详情页有多个网盘链接时，把「用户偏好的网盘」排前面
- * （默认顺序：百度 → 夸克 → UC → 迅雷 → 光鸭 → 天翼 → 123 → 阿里 → 移动）。
+ * <p>用途：详情页有多个网盘链接时，把「用户偏好的网盘」排前面。
+ *
+ * <h2>本项目范围</h2>
+ * <p>上游排 9 家（百度→夸克→UC→迅雷→光鸭→天翼→123→阿里→移动）。
+ * 本工程<b>只支持夸克与百度</b>，故识别表收窄为两项，
+ * <b>其余 7 家的域名一律归为 {@code other} 并沉到末尾</b>
+ * —— 它们不会再被识别成"某家网盘"，见
+ * {@code maintain/evidence/SCOPE_QUARK_BAIDU.md}。
  *
  * <h2>协议（还原自反编译）</h2>
  * <pre>
- *  9 个识别正则（顺序即默认优先级）:
+ *  识别正则（顺序即默认优先级）:
  *    0 pan.baidu.com            百度
  *    1 pan.quark.cn             夸克
- *    2 drive.uc.cn              UC
- *    3 pan.xunlei.com           迅雷
- *    4 www.guangyapan.com/s/    光鸭
- *    5 cloud.189.cn             天翼
- *    6 www.123\w{3}.com         123
- *    7 (aliyundrive|alipan)     阿里
- *    8 caiyun.139.com           移动
  *
  *  配置来源: /config.json 的 "panOrder" 字段（逗号分隔），缺失用默认顺序
  *  未知网盘: 排在最后（order = Integer.MAX_VALUE）
@@ -44,7 +43,7 @@ import java.util.regex.Pattern;
  *       重复项/空项不校验（后者会成为"比未知还靠前"的槽位）。</li>
  *   <li><b>稳定性</b>：{@code compare} 只比权重，同权重的顺序依赖
  *       {@code Collections.sort} 的稳定性（TimSort 稳定，但不该被当契约）。</li>
- *   <li><b>未还原</b>：9 个网盘域名的匹配规则按上游原文固化；
+ *   <li><b>未还原</b>：保留的 2 个网盘域名匹配规则按上游原文固化；
  *       真实链接形态（短链/中转页）未穷举。</li>
  * </ol>
  *
@@ -62,31 +61,20 @@ import java.util.regex.Pattern;
 */
 public class PanOrderPlain implements Comparator<Object> {
 
-    /** 默认网盘顺序（逐字来自上游 getDefaultPanOrder） */
-    public static final String[] DEFAULT_ORDER = {
-            "百度", "夸克", "UC", "迅雷", "光鸭", "天翼", "123", "阿里", "移动"
-    };
+    /** 默认网盘顺序（上游 9 家里只剩保留的这两项，相对次序不变） */
+    public static final String[] DEFAULT_ORDER = { "百度", "夸克" };
 
     /**
-     * 9 个识别正则 —— 数组下标即网盘标识索引。
-     * <p>逐字来自上游构造函数。
+     * 识别正则 —— 数组下标即网盘标识索引。
+     * <p>上游有 9 条；本项目只留 {@code baidu} / {@code quark} 两条（正则原文未改）。
      */
     private static final Pattern[] PATTERNS = {
             Pattern.compile("pan\\.baidu\\.com"),
             Pattern.compile("pan\\.quark\\.cn"),
-            Pattern.compile("drive\\.uc\\.cn"),
-            Pattern.compile("pan\\.xunlei\\.com"),
-            Pattern.compile("www\\.guangyapan\\.com/s/"),
-            Pattern.compile("cloud\\.189\\.cn"),
-            Pattern.compile("www\\.123\\w{3}\\.com"),
-            Pattern.compile("(www\\.aliyundrive\\.com|www\\.alipan\\.com)"),
-            Pattern.compile("caiyun\\.139\\.com"),
     };
 
     /** 索引 → 网盘名（下标与 PATTERNS 严格对应） */
-    private static final String[] KIND_BY_INDEX = {
-            "百度", "夸克", "UC", "迅雷", "光鸭", "天翼", "123", "阿里", "移动"
-    };
+    private static final String[] KIND_BY_INDEX = { "百度", "夸克" };
 
     /** 网盘名 → 排序权重 */
     private final Map<String, Integer> orderMap = new HashMap<>();

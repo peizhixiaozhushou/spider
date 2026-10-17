@@ -1,5 +1,6 @@
 package com.example.tvbox.plain.pan.client;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -56,10 +57,160 @@ public abstract class PanClientBase extends PanPlain {
 
     private static final String TAG = "PanClient";
 
+    /** 站点 {@code ext} 里的内联 cookie 字段名 */
+    public static final String EXT_COOKIE = "cookie";
+
+    /** 站点 {@code ext} 里的 cookie 文件路径字段名（绝对路径） */
+    public static final String EXT_COOKIE_FILE = "cookieFile";
+
     /** 是否已登录（子类在 init 时根据 cookie 判断） */
     protected boolean loggedIn = false;
     /** 账号显示名（如"我的夸克网盘"） */
     protected String accountName = "";
+
+    /** 站点 {@code ext} 内联的 cookie（最高优先级） */
+    protected String extCookie = "";
+    /** 站点 {@code ext} 指定的 cookie 文件绝对路径（次高优先级） */
+    protected String extCookieFile = "";
+    /** 最近一次 {@link #resolveCookie()} 的命中来源，仅用于日志与测试 */
+    protected String cookieOrigin = "";
+
+    // ─────────────────────────────────────────────────────────────
+    // 生命周期：解析 ext（cookie 配置的第 1/2 层）
+    // ─────────────────────────────────────────────────────────────
+
+    /**
+     * 初始化 —— 先把站点 {@code ext} 解析成"可用的 cookie 配置"。
+     *
+     * <p>宿主（FongMi / TVBox）在创建站点实例后调用本方法，{@code extend} 就是配置里
+     * 该站点的 {@code ext} 字段<b>原文</b>。本项目只用其中两个键：
+     * <pre>
+     *   {"cookie": "ctoken=...; __puus=...",            // 内联整串
+     *    "cookieFile": "/abs/path/quark_cookie.txt"}   // 或指向文件
+     * </pre>
+     *
+     * <p><b>为什么需要它</b>：桌面宿主（fmplayer.app 的 gateway.jar）跑在 JVM 里，
+     * 没有 {@code /sdcard}，靠文件路径拿不到 cookie；而 {@code ext} 是配置 JSON 的一部分，
+     * 导入配置即可生效。
+     *
+     * <p>{@code extend} 不是合法 JSON 对象时<b>不抛异常</b>，按"没有 ext 配置"处理
+     * （TVBox 生态里 {@code ext} 也可能是一段纯文本，塞进 JSON 解析必然失败）。
+     */
+    @Override
+    public void init(Context context, String extend) {
+        super.init(context, extend);
+        parseExt(extend);
+    }
+
+    /**
+     * 解析站点 {@code ext} —— 只认 {@link #EXT_COOKIE} / {@link #EXT_COOKIE_FILE}。
+     *
+     * @param extend ext 原文，可为 null/空/非 JSON
+     */
+    protected void parseExt(String extend) {
+        extCookie = "";
+        extCookieFile = "";
+        if (TextUtils.isEmpty(extend)) {
+            return;
+        }
+        try {
+            JSONObject o = new JSONObject(extend);
+            extCookie = trim(o.optString(EXT_COOKIE, ""));
+            extCookieFile = trim(o.optString(EXT_COOKIE_FILE, ""));
+        } catch (Throwable e) {
+            // 不是 JSON 对象 ⇒ 没有可用配置（不是错误，宿主里很常见）
+            Log.i(TAG, "ext is not a JSON object, ignored (len=" + extend.length() + ")");
+        }
+        if (!TextUtils.isEmpty(extCookie) || !TextUtils.isEmpty(extCookieFile)) {
+            Log.i(TAG, "ext cookie config: inline=" + (!TextUtils.isEmpty(extCookie))
+                    + " file=" + extCookieFile);
+        }
+    }
+
+    /**
+     * 统一凭据解析 —— cookie 配置的 4 层查找，<b>先命中即返回</b>：
+     * <ol>
+     *   <li>{@code ext.cookie} 内联整串</li>
+     *   <li>{@code ext.cookieFile} 指向的文件（JSON 里取 cookie 字段，纯文本整份用）</li>
+     *   <li>{@link PanCreds#candidatePaths(String)} 的目录查找：显式配置 → {@code -Dtvbox.pan.dir}
+     *       → {@code TVBOX_PAN_DIR} → {@code /sdcard} → 宿主数据目录（{@link PanCreds#hostRoot()}）</li>
+     *   <li>都没有 ⇒ {@code ""}（未登录）</li>
+     * </ol>
+     *
+     * <p>来源写入 {@link #cookieOrigin}：{@code "ext.cookie"} / {@code "ext.cookieFile"} /
+     * {@code "file:<命中的绝对路径>"} / {@code "none"}。带上完整路径是刻意的 ——
+     * "到底读的哪个文件"是排查网盘登录态最常问的问题。
+     *
+     * @return cookie 文本（已 trim）；永远非 null
+     */
+    protected String resolveCookie() {
+        if (!TextUtils.isEmpty(extCookie)) {
+            cookieOrigin = "ext.cookie";
+            return extCookie;
+        }
+        if (!TextUtils.isEmpty(extCookieFile)) {
+            String fromFile = readCookieFile(extCookieFile);
+            if (!TextUtils.isEmpty(fromFile)) {
+                cookieOrigin = "ext.cookieFile";
+                return fromFile;
+            }
+            Log.w(TAG, "ext.cookieFile 读不到内容: " + extCookieFile);
+        }
+        for (String p : PanCreds.candidatePaths(cookieFileName())) {
+            String v = readCookieFile(p);
+            if (!TextUtils.isEmpty(v)) {
+                cookieOrigin = "file:" + p;
+                return v;
+            }
+        }
+        cookieOrigin = "none";
+        return "";
+    }
+
+    /**
+     * 读一个"cookie 文件"：先按裸文本整份取；整份内容像 JSON 时取其中的 cookie 字段。
+     *
+     * <p>两种写法都能用：
+     * <ul>
+     *   <li>直接粘 cookie 串的纯文本文件 → 整份返回（trim 后）</li>
+     *   <li>{@code {"cookie":"...","nickname":"..."}} 这种（上游配置中心写的就是 JSON）
+     *       → 取 {@code cookie}/{@code Cookie}/{@code __pus}/{@code ctoken} 里第一个非空值</li>
+     * </ul>
+     *
+     * <p>⚠️ 若文件<b>是合法 JSON 但没有上述字段</b>，返回空串而不是把整段 JSON 当 cookie ——
+     * 否则 {@code {"nickname":"x"}} 会被当成 cookie 发出去，登录态"看起来有"其实无效。
+     *
+     * @param path 绝对路径
+     * @return 内容；读不到/不是凭据文件返回空串
+     */
+    public static String readCookieFile(String path) {
+        String raw = trim(PanCreds.readFile(path));
+        if (TextUtils.isEmpty(raw)) {
+            return "";
+        }
+        if (raw.startsWith("{")) {
+            try {
+                JSONObject o = new JSONObject(raw);
+                for (String k : new String[]{"cookie", "Cookie", "__pus", "ctoken"}) {
+                    String v = trim(o.optString(k, ""));
+                    if (!TextUtils.isEmpty(v)) {
+                        return v;
+                    }
+                }
+                // 合法 JSON 但没有 cookie 字段 ⇒ 这不是凭据文件
+                Log.w(TAG, "cookie file has no cookie field, ignored: " + path);
+                return "";
+            } catch (Throwable e) {
+                Log.w(TAG, "cookie file is not valid JSON, use raw text: " + path);
+            }
+        }
+        return raw;
+    }
+
+    /** 空安全 trim */
+    private static String trim(String s) {
+        return s == null ? "" : s.trim();
+    }
 
     // ─────────────────────────────────────────────────────────────
     // 子类必须实现
@@ -112,6 +263,26 @@ public abstract class PanClientBase extends PanPlain {
      */
     public boolean isLoggedIn() {
         return loggedIn;
+    }
+
+    /**
+     * 最近一次 {@link #resolveCookie()} 的命中来源（诊断/测试用）。
+     *
+     * @return {@code "ext.cookie"} / {@code "ext.cookieFile"} /
+     *         {@code "file:explicit|system-property|env|default"} / {@code "none"}
+     */
+    public String cookieOrigin() {
+        return cookieOrigin;
+    }
+
+    /** 站点 ext 里的内联 cookie（空串=未配置） */
+    public String extCookie() {
+        return extCookie;
+    }
+
+    /** 站点 ext 里指定的 cookie 文件路径（空串=未配置） */
+    public String extCookieFile() {
+        return extCookieFile;
     }
 
     // ─────────────────────────────────────────────────────────────

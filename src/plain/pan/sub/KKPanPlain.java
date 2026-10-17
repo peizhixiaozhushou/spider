@@ -38,9 +38,9 @@ import java.util.Map;
  *       {@code size}/{@code limit}、{@code keyword}/{@code search} 对不上，
  *       而且<b>丢了 {@code sort=featured}</b>（排序不同 ⇒ 结果集与顺序都不同）。
  *       现逐字对齐。断言：{@code ★ KKPan 请求形态（URL 参数名与顺序）}。</li>
- *   <li><b>{@code homeContent} 的 5 个分类</b>（{@code KKPan.java:97-115}）未实现：
- *       夸克网盘 / 百度网盘 / 光鸭云盘 / 迅雷云盘 / UC网盘 —— 每个分类走
- *       {@code platform=<type>&sort=hot}（{@code :55}）。本类只承诺搜索。</li>
+ *   <li><b>{@code homeContent} 的分类</b>（{@code KKPan.java:97-115}）未实现：
+ *       上游 5 个（夸克/百度/光鸭/迅雷/UC），本项目<b>只有夸克与百度在范围内</b>，
+ *       其余 3 个不再需要；本类仍只承诺搜索。</li>
  *   <li><b>{@code detailContent} 未实现</b>，交给 {@link PanPlain} 的识别 + resolver。</li>
  *   <li><b>网盘图标映射未复刻</b>：上游 {@code getCloudIcon(target_platform)}
  *       把类型映射到图床常量；本类不内置图床 URL。</li>

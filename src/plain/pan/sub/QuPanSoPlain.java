@@ -41,7 +41,9 @@ import java.util.Map;
  *       本类把页码做成可注入（{@link #setPageForTest}），默认第 1 页。</li>
  *   <li><b>网盘图标映射未复刻</b>：上游按 {@code pan.quark.cn}/{@code drive.uc.cn}/
  *       {@code pan.baidu.com}/{@code aliyundrive.com}/{@code alipan.com}
- *       5 种特征匹配图床常量（{@code :31-52}）。本类不内置图床 URL。</li>
+ *       5 种特征匹配图床常量（{@code :31-52}）。本类不内置图床 URL。
+ *       其中 UC/阿里已不在本项目范围内（见
+ *       {@code maintain/evidence/SCOPE_QUARK_BAIDU.md}）。</li>
  *   <li><b>{@code categoryid}/{@code filetypeid}/{@code courseid}/{@code sortBy}/{@code order}
  *       五个筛选字段固定为上游的常量值</b>（0/1/1/sort/desc）：上游没有把它们暴露成
  *       可配置参数，本类同样固定 —— 若站点改了默认筛选语义，需要改

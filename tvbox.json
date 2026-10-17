@@ -898,12 +898,383 @@
     "type": "rect",
     "ratio": 1.618
    }
+  },
+  {
+   "key": "csp_tvhome",
+   "name": "推广电视家",
+   "type": 1,
+   "api": "http://maccms.mitetech.cn/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "vod1_家鹏视频",
+   "name": "家鹏视频(265,246)",
+   "type": 1,
+   "api": "https://vapi.syun.yun/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod2_免费在线影视",
+   "name": "免费在线影视(213,903)",
+   "type": 1,
+   "api": "https://hlwywj.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod3_日韩情感电影",
+   "name": "日韩情感电影(213,903)",
+   "type": 1,
+   "api": "https://www.ygvmqu.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod4_青豆影院",
+   "name": "青豆影院(213,903)",
+   "type": 1,
+   "api": "https://www.mgqjlue.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod5_最大资源采集",
+   "name": "最大资源采集(124,453)",
+   "type": 1,
+   "api": "https://api.zuidapi.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod6_金鹰资源采集",
+   "name": "金鹰资源采集(115,664)",
+   "type": 1,
+   "api": "https://www.jinyingzy.net/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod7_虎牙资源采集",
+   "name": "虎牙资源采集(114,599)",
+   "type": 1,
+   "api": "https://www.huyazy.net/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod8_魔都资源",
+   "name": "魔都资源(90,383)",
+   "type": 1,
+   "api": "http://128.241.254.214/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod9_西瓜资源",
+   "name": "西瓜资源(89,572)",
+   "type": 1,
+   "api": "https://xgzy8.tv/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod10_芒果资源",
+   "name": "芒果资源(88,013)",
+   "type": 1,
+   "api": "https://www.mgzy2.tv/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod11_吉吉资源",
+   "name": "吉吉资源(84,372)",
+   "type": 1,
+   "api": "https://caiji.jjzyapi.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod12_大众资源",
+   "name": "大众资源(83,517)",
+   "type": 1,
+   "api": "https://dzzy5.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod13_影视站采集",
+   "name": "影视站采集(73,164)",
+   "type": 1,
+   "api": "https://360zy4.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod14_爱奇艺资源",
+   "name": "爱奇艺资源(69,385)",
+   "type": 1,
+   "api": "https://www.iqiyizy.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod15_百度资源",
+   "name": "百度资源(49,146)",
+   "type": 1,
+   "api": "https://bdzy4.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod16_母鸡资源",
+   "name": "母鸡资源(34,807)",
+   "type": 1,
+   "api": "https://mujiziyuan00.com/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod17_猫眼资源",
+   "name": "猫眼资源(34,263)",
+   "type": 1,
+   "api": "https://www.maoyanzy.cc/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "vod18_奇米资源",
+   "name": "奇米资源(3,533)",
+   "type": 1,
+   "api": "https://cj.qimizyz.vip/api.php/provide/vod/",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": ""
+  },
+  {
+   "key": "drpy_ppnix",
+   "name": "PPnix",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/ppnix.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/ppnix.js"
+  },
+  {
+   "key": "drpy_4kvm",
+   "name": "4K影视",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/4kvm.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/4kvm.js"
+  },
+  {
+   "key": "drpy_bttwo",
+   "name": "比特",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/bttwo.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/bttwo.js"
+  },
+  {
+   "key": "drpy_iyf",
+   "name": "爱壹帆",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/iyf.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/iyf.js"
+  },
+  {
+   "key": "drpy_anime1",
+   "name": "Anime1",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/anime1.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 0,
+   "ext": "./tvbox/anime1.js"
+  },
+  {
+   "key": "drpy_hongniu",
+   "name": "推广红牛",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/hongniu.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/hongniu.js"
+  },
+  {
+   "key": "drpy_jinying",
+   "name": "推广金鹰",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/jinying.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/jinying.js"
+  },
+  {
+   "key": "drpy_huya",
+   "name": "推广虎牙",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/huya.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/huya.js"
+  },
+  {
+   "key": "drpy_jisu",
+   "name": "推广极速",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/jisu.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/jisu.js"
+  },
+  {
+   "key": "drpy_guangsu",
+   "name": "推广光速",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/guangsu.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/guangsu.js"
+  },
+  {
+   "key": "drpy_modu",
+   "name": "推广魔都",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/modu.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/modu.js"
+  },
+  {
+   "key": "drpy_zuida",
+   "name": "推广最大",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/zuida.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/zuida.js"
+  },
+  {
+   "key": "drpy_agedm",
+   "name": "推广AGE动漫",
+   "type": 3,
+   "api": "http://127.0.0.1:9978/api/v1/file/tvbox/agedm.js",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1,
+   "ext": "./tvbox/agedm.js"
+  },
+  {
+   "key": "csp_PanQuark",
+   "name": "夸克网盘",
+   "type": 3,
+   "api": "csp_PanQuark",
+   "searchable": 0,
+   "quickSearch": 0,
+   "filterable": 0,
+   "ext": {
+    "cookie": ""
+   }
+  },
+  {
+   "key": "csp_PanBaidu",
+   "name": "百度网盘",
+   "type": 3,
+   "api": "csp_PanBaidu",
+   "searchable": 0,
+   "quickSearch": 0,
+   "filterable": 0,
+   "ext": {
+    "cookie": ""
+   }
   }
  ],
  "lives": [],
- "parses": [],
+ "parses": [
+  {
+   "name": "AGE云播放器(wuzhoupai)",
+   "type": 0,
+   "url": "https://jx.wuzhoupai.com:8443/vip/?url=",
+   "ext": {
+    "flag": [
+     "西瓜",
+     "非凡",
+     "暴风",
+     "无尽",
+     "计算云"
+    ],
+    "header": {
+     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+    }
+   }
+  }
+ ],
  "rules": [],
  "doh": [],
- "flags": [],
+ "flags": [
+  "youku",
+  "qq",
+  "iqiyi",
+  "qiyi",
+  "letv",
+  "sohu",
+  "tudou",
+  "pptv",
+  "mgtv"
+ ],
  "ads": []
 }

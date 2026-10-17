@@ -90,14 +90,16 @@ public class SeedHubPlain extends PanPlain {
     /** page-nav 之后的搜索窗口大小 */
     private static final int PAGE_NAV_WINDOW = 2048;
 
-    /** 网盘类型 → 封面图（上游硬编码） */
+    /**
+     * 网盘类型 → 封面图（上游硬编码 5 家，本项目只留夸克/百度）。
+     *
+     * <p>另外 3 家（ali/uc/xunlei）的条目已删除：{@link PanPlain#identify} 不再
+     * 产出这些 kind，留着就是永远取不到的死数据。
+     */
     private static final Map<String, String> PIC_BY_KIND = new LinkedHashMap<>();
     static {
-        PIC_BY_KIND.put("ali", "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI/20260503/8Yr6/1200X800/aliyun.jpg/webp");
         PIC_BY_KIND.put("quark", "https://img.51shazhu.com/autoupload/g1b6f/20260807/bsds/1200X800/quark.jpg/webp");
-        PIC_BY_KIND.put("uc", "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI/20260503/kbEn/1200X800/uc.jpg/webp");
         PIC_BY_KIND.put("baidu", "https://img.51shazhu.com/autoupload/g1b6f/20260806/V6JN/1200X800/baidu.jpg/webp");
-        PIC_BY_KIND.put("xunlei", "https://img.51shazhu.com/autoupload/gE6Y0Af2tjXBCNig6CtNDI12_FRYNb81z6UPhMWD8iI/20260623/4oPO/1200X800/xunlei.jpg/webp");
     }
 
 

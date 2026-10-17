@@ -194,15 +194,21 @@ public abstract class PanUCQuarkBase extends PanClientBase {
     }
 
     /**
-     * 读 cookie —— 还原 {@code checkuccookie() / checkquarkcookie()}。
+     * 读 cookie。
      *
-     * <p>主文件 {@code <sdcard>/TVBox/<cookie>.txt} 是 JSON（取 {@code cookie} 字段），
-     * 兜底 {@code <sdcard>/TV/<cookie>.txt} 是裸文本。
+     * <p>查找顺序见 {@link PanClientBase#resolveCookie()}：站点 {@code ext.cookie} →
+     * {@code ext.cookieFile} → 目录（{@code -Dtvbox.pan.dir} / {@code TVBOX_PAN_DIR} /
+     * {@code <sdcard>/TVBox/<file>} → {@code <sdcard>/TV/<file>}）。
+     *
+     * <p>文件层仍然还原上游 {@code checkquarkcookie()}：主文件是 JSON（取 {@code cookie} 字段），
+     * 兜底文件是裸文本。
      */
     public void reloadCredential() {
-        String c = PanCreds.read(brandCookieFile(), "cookie");
+        String c = resolveCookie();
         this.cookie = c == null ? "" : c.trim();
         this.loggedIn = !TextUtils.isEmpty(this.cookie);
+        Log.i(TAG, brandName() + " cookie origin=" + cookieOrigin
+                + " len=" + this.cookie.length() + " loggedIn=" + this.loggedIn);
     }
 
     /** 注入 cookie —— 测试用 */

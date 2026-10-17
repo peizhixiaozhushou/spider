@@ -110,11 +110,17 @@ public class PanSouPlain extends PanApiPlain {
     private static final String DEFAULT_SITE = "";
 
     /**
-     * 上游显式限定的网盘类型白名单（{@code PanSou.java:32}）。
-     * <p>逐字保留顺序 —— 服务端可能按这个串的顺序或内容过滤。
+     * 网盘类型白名单 —— 上游传 8 家（{@code PanSou.java:32}），本工程只留夸克+百度。
+     *
+     * <p>为什么要改而不是照抄：这个串是<b>服务端过滤条件</b>，力量很大 ——
+     * 留着 {@code aliyun,uc,tianyi,123,xunlei,mobile} 就是让盘搜把
+     * 我们<b>根本解析不了</b>的链接塞进结果里，用户点进去只能看到空线路。
+     * 收窄到两家后，服务端只回我们确实支持的分享。
+     *
+     * <p>顺序保持上游的相对次序（quark 在 baidu 之前，与上游 ali 之后的
+     * {@code quark,uc,baidu} 一致）。
      */
-    public static final String CLOUD_TYPES =
-            "aliyun,quark,uc,baidu,tianyi,123,xunlei,mobile";
+    public static final String CLOUD_TYPES = "quark,baidu";
 
     @Override
     protected String defaultSite() {

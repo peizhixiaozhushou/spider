@@ -30,19 +30,19 @@ import java.util.regex.Pattern;
  *   <li>输出标准 TVBox 详情 JSON</li>
  * </ol>
  *
- * <h2>支持的网盘（正则来自上游，逐字保留）</h2>
+ * <h2>支持的网盘（本项目范围：只有夸克与百度）</h2>
  * <table>
  *   <tr><th>标识</th><th>域名特征</th></tr>
- *   <tr><td>ali</td><td>aliyundrive.com / alipan.com</td></tr>
  *   <tr><td>quark</td><td>pan.quark.cn</td></tr>
- *   <tr><td>uc</td><td>drive.uc.cn</td></tr>
- *   <tr><td>cloud189</td><td>cloud.189.cn|com</td></tr>
- *   <tr><td>cloud123</td><td>123xxx.com|cn / 123pan</td></tr>
  *   <tr><td>baidu</td><td>pan.baidu.com</td></tr>
- *   <tr><td>xunlei</td><td>pan.xunlei.com</td></tr>
- *   <tr><td>guangya</td><td>www.guangyapan.com</td></tr>
- *   <tr><td>mobile</td><td>移动云盘 /w/i/ 等</td></tr>
  * </table>
+ *
+ * <p>上游 {@code Pan.java} 认识 9 家网盘（ali/quark/uc/cloud189/cloud123/baidu/
+ * xunlei/guangya/mobile）。本工程<b>按需求把范围收窄到夸克 + 百度</b>：
+ * 其余 7 家的识别正则、分发分支与解析器一律<b>删除</b>，不留"识别得到但解析不了"
+ * 的半截路径 —— 那会让子源搜出阿里/UC 链接后在详情页给出空线路，
+ * 比直接不识别更难排查。被删掉的 7 家及理由见
+ * {@code maintain/evidence/SCOPE_QUARK_BAIDU.md}。
  *
  * <h2>子类需要做的</h2>
  * <pre>
@@ -60,13 +60,13 @@ import java.util.regex.Pattern;
  * 本实现把它改成 {@link PanResolver} 注入接口。因此下列分支<b>有意留空</b>，
  * 每一项都写了"上游在哪、缺什么、谁该补"：
  * <ol>
- *   <li><b>{@code Pan.a(Matcher, String)} 的 9 个网盘分支</b>（{@code Pan.java:52-136}）：
+ *   <li><b>{@code Pan.a(Matcher, String)} 的网盘分支</b>（{@code Pan.java:52-136}；上游 9 家，本项目仅保留夸克/百度）：
  *       上游按正则命中逐家调用私有 API 把分享换成直链，返回 {@code merge.p028c.e} 播放条目。
  *       本实现改为 {@link #resolverFor(String)} —— <b>默认没有任何 resolver 注册</b>，
  *       所以未注册时 {@link #detailContent(List)} 会返回空响应并打日志
  *       （{@code no resolver for kind=...}）。这是设计（解耦），不是缺陷；
  *       要真正解析分享请用 {@code pan.client/} 下的 {@code Pan*Plain} 注册。</li>
- *   <li><b>{@code Pan.playerContent(String,String,List)} 的 9 路分发</b>
+ *   <li><b>{@code Pan.playerContent(String,String,List)} 的多路分发</b>
  *       （{@code Pan.java:491-536}）：上游按线路中文名分发到 9 个单例
  *       （{@code i.d()} 阿里 / {@code w.e()} 夸克 / {@code B.c()} UC / {@code l.c()} 天翼 /
  *       {@code m.a()} 123 / {@code j.f()} 百度 / {@code X.m()} 迅雷 / {@code G.r()} 光鸭 /
@@ -102,8 +102,8 @@ import java.util.regex.Pattern;
  *       {@code resolvers}。
  *       断言：{@code PanTest#testResolverDispatch()}（未注册 → {@code resolverFor} 返回 null /
  *       注册后可取 / {@code detailContent} 无解析器 → 空响应）。</li>
- *   <li><b>9 家网盘硬编码在基类</b>（{@code Pan.java:52-136} + {@code :491-536} 共 ~330 行）：
- *       新增一家网盘必须改基类，且 27 个子类全部被动继承这套 if-else。
+ *   <li><b>网盘解析硬编码在基类</b>（{@code Pan.java:52-136} + {@code :491-536} 共 ~330 行）：
+ *       新增一家网盘必须改基类，且全部子类被动继承这套 if-else。
  *       → 已改为 {@link PanResolver} 注册表（{@link #registerResolver}），
  *       基类只留「识别 + 分发」。</li>
  *   <li><b>用中文线路名做分发键</b>（{@code str.contains("阿里")}/{@code "夸克"}…）：
@@ -134,24 +134,10 @@ public abstract class PanPlain extends BaseSpider {
 
     private static final String TAG = "PanPlain";
 
-    // ── 9 种网盘识别正则（逐字来自上游 Pan.java）────────────────
-    /** 阿里云盘 */
-    protected static final Pattern RE_ALI = Pattern.compile(
-            "(www\\.aliyundrive\\.com|www\\.alipan\\.com)/s/([^/]+)(/folder/([^/]+))?");
+    // ── 网盘识别正则（本项目只留夸克与百度；正则取自上游 Pan.java）────
     /** 夸克网盘 */
     protected static final Pattern RE_QUARK = Pattern.compile(
             "pan\\.quark\\.cn/s/([^/?#]+)(?:#/list/share)?(?:\\?pwd=([^&]+))?(?:[#&].*)?$");
-    /** UC 网盘 */
-    protected static final Pattern RE_UC = Pattern.compile(
-            "drive\\.uc\\.cn/s/([0-9a-fA-F]{8,20})(?:\\?pwd=([^&]+))?(?:\\?public=1)?(?:[#&].*)?$");
-    /** 天翼云盘 */
-    protected static final Pattern RE_189 = Pattern.compile(
-            "cloud\\.189\\.(?:cn|com)/(?:[^/?#]+/)?(?:share\\.html#/)?t/([A-Za-z0-9]+)"
-                    + "(?:\\?pwd=([A-Za-z0-9]+)|[（(]访问码：([A-Za-z0-9]+)[）)])?");
-    /** 123 云盘 */
-    protected static final Pattern RE_123 = Pattern.compile(
-            "(?:www\\.)?123(?:[a-zA-Z0-9]{3}|pan)\\.(?:com|cn)/(?:s|123pan)/([^/?#]+)"
-                    + "(?:\\?pwd=([^&#]+))?(?:[&#].*)?$");
     /**
      * 百度网盘。
      *
@@ -162,15 +148,6 @@ public abstract class PanPlain extends BaseSpider {
     protected static final Pattern RE_BAIDU = Pattern.compile(
             "pan\\.baidu\\.com/(?:s/1([^?&#/\\s]+)(?:\\?pwd=([^&\\s]+))?"
           + "|share/init\\?surl=([^&\\s]+)(?:&pwd=([^&\\s]+))?)");
-    /** 迅雷云盘 */
-    protected static final Pattern RE_XUNLEI = Pattern.compile(
-            "pan\\.xunlei\\.com/s/([^?#/]+)(?:\\?pwd=([^&#]+))?");
-    /** 光鸭云盘 */
-    protected static final Pattern RE_GUANGYA = Pattern.compile(
-            "www\\.guangyapan\\.com/s/([^?#/]+)(?:\\?code=([^&#]+))?");
-    /** 移动云盘 */
-    protected static final Pattern RE_MOBILE = Pattern.compile(
-            "(?:/w/i/|\\?linkID=|/m/i\\?)([\\w]+)");
 
     /** 提取码模式：把"提取码: xxxx"转成"?pwd=xxxx" */
     private static final Pattern RE_EXTRACT_CODE = Pattern.compile("提取码[\\s:]*");
@@ -243,7 +220,7 @@ public abstract class PanPlain extends BaseSpider {
      * 且子类可能跨包使用。
      */
     public static class PanMatch {
-        /** ali/quark/uc/cloud189/cloud123/baidu/xunlei/guangya/mobile */
+        /** 只有 {@code quark} 或 {@code baidu}（本项目范围） */
         public final String kind;
         /** 分享 ID */
         public final String shareId;
@@ -265,36 +242,23 @@ public abstract class PanPlain extends BaseSpider {
     }
 
     /**
-     * 按上游顺序识别链接归属 —— 还原 {@code Pan.detailContent()} 的 if-else 链。
+     * 识别链接归属 —— 还原 {@code Pan.detailContent()} 的 if-else 链，但只剩两家。
      *
-     * <p>顺序很重要：先匹配的优先。上游就是 ali → quark → uc → 189 → 123
-     * → baidu → xunlei → guangya → mobile。
+     * <p>顺序与上游一致（上游 ali → quark → uc → 189 → 123 → baidu → xunlei
+     * → guangya → mobile，先匹配的优先）。本项目保留的 {@code quark} / {@code baidu}
+     * 在上游链里的相对次序不变，只是把中间被删的 7 家摘掉。
+     *
+     * <p><b>非夸克/百度的链接一律返回 null</b>（视为"不是网盘分享"），
+     * 由调用方按"无有效链接"处理。这是刻意的：让详情页明确失败，
+     * 而不是给出一条永远播不动的线路。
      *
      * @return 未识别返回 null
      */
     public PanMatch identify(String url) {
         if (url == null || url.isEmpty()) return null;
 
-        Matcher m = RE_ALI.matcher(url);
-        if (m.find()) {
-            // ali: group(2)=shareId, groupCount()==4 时 group(4)=folderId
-            String id = m.group(2);
-            if (m.groupCount() == 4 && m.group(4) != null) id = id + "/" + m.group(4);
-            return new PanMatch("ali", id, "", m);
-        }
-        m = RE_QUARK.matcher(url);
+        Matcher m = RE_QUARK.matcher(url);
         if (m.find()) return new PanMatch("quark", m.group(1), m.group(2), m);
-
-        m = RE_UC.matcher(url);
-        if (m.find()) return new PanMatch("uc", m.group(1), m.group(2), m);
-
-        m = RE_189.matcher(url);
-        if (m.find()) {
-            String pwd = m.group(2) != null ? m.group(2) : m.group(3);
-            return new PanMatch("cloud189", m.group(1), pwd, m);
-        }
-        m = RE_123.matcher(url);
-        if (m.find()) return new PanMatch("cloud123", m.group(1), m.group(2), m);
 
         m = RE_BAIDU.matcher(url);
         if (m.find()) {
@@ -302,15 +266,6 @@ public abstract class PanPlain extends BaseSpider {
             String pwd = m.group(1) != null ? m.group(2) : m.group(4);
             return new PanMatch("baidu", id, pwd, m);
         }
-        m = RE_XUNLEI.matcher(url);
-        if (m.find()) return new PanMatch("xunlei", m.group(1), m.group(2), m);
-
-        m = RE_GUANGYA.matcher(url);
-        if (m.find()) return new PanMatch("guangya", m.group(1), m.group(2), m);
-
-        m = RE_MOBILE.matcher(url);
-        if (m.find()) return new PanMatch("mobile", m.group(1), "", m);
-
         return null;
     }
 
@@ -397,21 +352,11 @@ public abstract class PanPlain extends BaseSpider {
         return TextUtils.join(Vod.SEP_SOURCE, froms);
     }
 
-    /** 网盘标识 → 中文显示名 */
+    /** 网盘标识 → 中文显示名（只有夸克与百度两种取值） */
     public static String panDisplayName(String kind) {
-        if (kind == null) return "网盘";
-        switch (kind) {
-            case "ali":      return "阿里";
-            case "quark":    return "夸克";
-            case "uc":       return "UC";
-            case "cloud189": return "天翼";
-            case "cloud123": return "123";
-            case "baidu":    return "百度";
-            case "xunlei":   return "迅雷";
-            case "guangya":  return "光鸭";
-            case "mobile":   return "移动";
-            default:         return "网盘";
-        }
+        if ("quark".equals(kind)) return "夸克";
+        if ("baidu".equals(kind)) return "百度";
+        return "网盘";
     }
 
     /** 还原 {@code Pan.detailContentVodPlayUrl()} —— 批量识别链接 */
