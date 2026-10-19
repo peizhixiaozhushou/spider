@@ -3,7 +3,130 @@
  "wallpaper": "",
  "logo": "",
  "danmaku": "",
+ "lives": [],
+ "parses": [
+  {
+   "name": "AGE云播放器(wuzhoupai)",
+   "type": 0,
+   "url": "https://jx.wuzhoupai.com:8443/vip/?url=",
+   "ext": {
+    "flag": [
+     "西瓜",
+     "非凡",
+     "暴风",
+     "无尽",
+     "计算云"
+    ],
+    "header": {
+     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+    }
+   }
+  }
+ ],
+ "rules": [],
+ "doh": [],
+ "flags": [
+  "youku",
+  "qq",
+  "iqiyi",
+  "qiyi",
+  "letv",
+  "sohu",
+  "tudou",
+  "pptv",
+  "mgtv"
+ ],
+ "ads": [],
  "sites": [
+  {
+   "key": "首页",
+   "name": "豆瓣 • 首页",
+   "type": 3,
+   "api": "csp_Douban",
+   "searchable": 0,
+   "quickSearch": 0,
+   "filterable": 0
+  },
+  {
+   "key": "配置",
+   "name": "配置 • 中心",
+   "type": 3,
+   "api": "csp_Config",
+   "searchable": 0,
+   "quickSearch": 0,
+   "filterable": 0
+  },
+  {
+   "key": "网盘_夸克",
+   "name": "我的 • 夸克网盘",
+   "type": 3,
+   "api": "csp_PanQuark",
+   "searchable": 0,
+   "quickSearch": 0,
+   "filterable": 1,
+   "ext": {
+    "cookie": "",
+    "cookieFile": ""
+   }
+  },
+  {
+   "key": "网盘_百度",
+   "name": "我的 • 百度网盘",
+   "type": 3,
+   "api": "csp_PanBaidu",
+   "searchable": 0,
+   "quickSearch": 0,
+   "filterable": 1,
+   "ext": {
+    "cookie": "",
+    "cookieFile": ""
+   }
+  },
+  {
+   "key": "觅盘",
+   "name": "觅盘 • 网盘搜索",
+   "type": 3,
+   "api": "csp_MiPan",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "趣盘",
+   "name": "趣盘 • 网盘搜索",
+   "type": 3,
+   "api": "csp_QuPanSo",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "酷乐",
+   "name": "酷乐 • 网盘搜索",
+   "type": 3,
+   "api": "csp_KuLe",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "卡卡",
+   "name": "卡卡 • 4K",
+   "type": 3,
+   "api": "csp_KKPan",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
+  {
+   "key": "玩偶",
+   "name": "玩偶 • 4K",
+   "type": 3,
+   "api": "csp_Wogg",
+   "searchable": 1,
+   "quickSearch": 1,
+   "filterable": 1
+  },
   {
    "key": "预告",
    "name": "新片 • 预告",
@@ -145,26 +268,6 @@
     "host": "",
     "site": "https://123-1349250429.cos.ap-shanghai.myqcloud.com/app.txt",
     "version": "3.0.2.4",
-    "decrypt": "1"
-   }
-  },
-  {
-   "key": "华谊",
-   "name": "华谊 • APP",
-   "type": 3,
-   "api": "csp_AppDrama",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "ext": {
-    "appName": "华谊",
-    "publicKey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCp9Ek4wIlQAtwFnuBRlsFiow2tr+4UOciGeNKbY7nL74etUqUb6fvpOSOHhFEfaWlfwUpOB17x3JEL3No19nfjCeVYrYPjlJcgoqUWH/tfIfFAQWvtxBIBlKazkhw8d3ChysWmeWRikKqkBsVRY4oqNPuj4sjm6Zult0U4I4prRQIDAQAB",
-    "dataKey": "NDBYSZR1DMRRZ05NSUCWEJNIYWLBPT0=",
-    "dataIv": "OC1A06E197EF10CF3F6058CA7A803B5E",
-    "pkg": "com.muyue.tool",
-    "host": "",
-    "site": "https://vip.123pan.cn/1851089669/oss/az5.txt",
-    "version": "1.0.0.4",
     "decrypt": "1"
    }
   },
@@ -747,39 +850,5 @@
    "filterable": 1,
    "ext": ""
   }
- ],
- "lives": [],
- "parses": [
-  {
-   "name": "AGE云播放器(wuzhoupai)",
-   "type": 0,
-   "url": "https://jx.wuzhoupai.com:8443/vip/?url=",
-   "ext": {
-    "flag": [
-     "西瓜",
-     "非凡",
-     "暴风",
-     "无尽",
-     "计算云"
-    ],
-    "header": {
-     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
-    }
-   }
-  }
- ],
- "rules": [],
- "doh": [],
- "flags": [
-  "youku",
-  "qq",
-  "iqiyi",
-  "qiyi",
-  "letv",
-  "sohu",
-  "tudou",
-  "pptv",
-  "mgtv"
- ],
- "ads": []
+ ]
 }
