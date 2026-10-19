@@ -119,15 +119,6 @@
    "filterable": 1
   },
   {
-   "key": "玩偶",
-   "name": "玩偶 • 4K",
-   "type": 3,
-   "api": "csp_Wogg",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1
-  },
-  {
    "key": "预告",
    "name": "新片 • 预告",
    "type": 3,
@@ -158,22 +149,6 @@
     "sk": "WEB-50a8e9c84a1dc05669a692ded99a2dac46527229e607a7be15db88dbc59059d1",
     "client": "8f3d2a1c7b6e5d4c9a0b1f2e3d4c5b6a",
     "sign": "ddtvf65f3a83d6d9ad6f"
-   }
-  },
-  {
-   "key": "马猴影视",
-   "name": "马猴 • APP",
-   "type": 3,
-   "api": "csp_App3Q",
-   "ext": {
-    "host": "https://45.150.167.18:8000",
-    "finger": "SF-A962FEC75DA28D7514F2A16580334272A78AC0A8429F10C94F47C1BAFC876E3F",
-    "updateId": "43c1ef69-3748-aaeb-317f-c621c77653ee",
-    "deviceBrand": "vivo",
-    "deviceModel": "V2309A",
-    "pkg": "com.damahou.tv",
-    "sk": "SK-woniu-thanks",
-    "ver": "1"
    }
   },
   {
@@ -208,80 +183,6 @@
     "package": "com.yf.lelian",
     "buildNumber": "2001",
     "buildSignature": "A40DA80A59D170CAA950CF15C18C454D47A39B26989D8B640ECD745BA71BF5DC"
-   }
-  },
-  {
-   "key": "天堂",
-   "name": "天堂 • APP",
-   "type": 3,
-   "api": "csp_AppDrama",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "ext": {
-    "appName": "电影天堂",
-    "publicKey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCduNEnfxGaLuQRk5ABzXHhPV43zi00sCHjLo8BYc+Wi6xXm2b4v0i28Sq4WlNCKhseft9fz8kO/qLr6/022o1RcuOU7e4GFL3U9WnNODwRBYSYWd+K8nqpI/tAUDmZEBGRWqjrc7x6aMl3A+xpnWkLbPCLsuhbuuUE3tv09oeOpwIDAQAB",
-    "dataKey": "D2KREWRIBVNAUJJYEDL4VFHOY2Q0PQ==",
-    "dataIv": "OC1A06E197EF10CF3F6058CA7A803B5E",
-    "pkg": "com.dytiantang.one",
-    "host": "",
-    "site": "https://dyttandroid04-1372779881.cos.ap-shanghai.myqcloud.com/app_dyttandroid.txt",
-    "version": "3.0.0.7",
-    "decrypt": "0"
-   }
-  },
-  {
-   "key": "苹果",
-   "name": "苹果 • APP",
-   "type": 3,
-   "api": "csp_AppDrama",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "ext": {
-    "appName": "小苹果",
-    "commonKey": "ed5fdsgucxumegqa",
-    "publicKey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCduNEnfxGaLuQRk5ABzXHhPV43zi00sCHjLo8BYc+Wi6xXm2b4v0i28Sq4WlNCKhseft9fz8kO/qLr6/022o1RcuOU7e4GFL3U9WnNODwRBYSYWd+K8nqpI/tAUDmZEBGRWqjrc7x6aMl3A+xpnWkLbPCLsuhbuuUE3tv09oeOpwIDAQAB",
-    "dataKey": "S0VNDTJHOFHHCNMRAW5IV2TOS2PBPQ==",
-    "dataIv": "OC1A06E197EF10CF3F6058CA7A803B5E",
-    "pkg": "com.juechufsh.android.xpg1",
-    "host": "",
-    "site": "https://xpgandroid03-1372779881.cos.ap-beijing.myqcloud.com/app_xpg_android.txt",
-    "version": "1.0.0.3",
-    "decrypt": "0"
-   }
-  },
-  {
-   "key": "橘汁",
-   "name": "橘汁 • APP",
-   "type": 3,
-   "api": "csp_AppDrama",
-   "searchable": 1,
-   "quickSearch": 1,
-   "filterable": 1,
-   "ext": {
-    "appName": "橘汁",
-    "publicKey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCr8SzZhjYy+rsya1K09t8d2K50pWFoBkgUqMpKOiW+3IEVKd4eTdvg9RSOjQ82kypL6R9BnsmrS1V8s4PVDwjQbUtYhTPPC9Hz16qY7rpD6m0d2vr09/UpWQ5uOy9PR0QTrsioveZ+DIe9jc3C+zBCu/kZSY/R8stwJoiitki3gwIDAQAB",
-    "dataKey": "OW1WBLFZCLJ0WTNJQMRSZ2DYSGNBPT0=",
-    "dataIv": "OC1A06E197EF10CF3F6058CA7A803B5E",
-    "pkg": "com.mxj.wylcjbxyx",
-    "host": "",
-    "site": "https://123-1349250429.cos.ap-shanghai.myqcloud.com/app.txt",
-    "version": "3.0.2.4",
-    "decrypt": "1"
-   }
-  },
-  {
-   "key": "王子",
-   "name": "王子 • APP",
-   "type": 3,
-   "api": "csp_AppGet",
-   "searchable": 1,
-   "changeable": 1,
-   "ext": {
-    "url": "https://app.95112475.xyz",
-    "dataKey": "5a9w6x58dsq6z3a6",
-    "dataIv": "5a9w6x58dsq6z3a6"
    }
   },
   {
@@ -403,18 +304,6 @@
    "quickSearch": 1,
    "filterable": 1,
    "ext": "https://xunlei8.me"
-  },
-  {
-   "key": "飞球体育",
-   "name": "飞球 • 体育",
-   "type": 3,
-   "api": "csp_SportsFeiqiu",
-   "searchable": 0,
-   "quickSearch": 0,
-   "changeable": 0,
-   "style": {
-    "type": "list"
-   }
   },
   {
    "key": "瓜子体育",
