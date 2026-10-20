@@ -1,30 +1,52 @@
 {
- "spider": "https://gh-proxy.org/https://raw.githubusercontent.com/peizhixiaozhushou/spider/main/spider.jar",
- "wallpaper": "",
+ "spider": "https://gh-proxy.org/https://raw.githubusercontent.com/peizhixiaozhushou/spider/main/spider.jpg;md5;https://gh-proxy.org/https://raw.githubusercontent.com/peizhixiaozhushou/spider/main/spider.jpg.md5",
+ "wallpaper": "https://www.loliapi.com/acg/",
  "logo": "",
  "danmaku": "",
- "lives": [],
+ "lives": [
+  {
+   "name": "综合直播",
+   "type": 0,
+   "playerType": 2,
+   "url": "http://193.123.86.190:14888/TV/iptv.php"
+  }
+ ],
  "parses": [
   {
-   "name": "AGE云播放器(wuzhoupai)",
-   "type": 0,
-   "url": "https://jx.wuzhoupai.com:8443/vip/?url=",
-   "ext": {
-    "flag": [
-     "西瓜",
-     "非凡",
-     "暴风",
-     "无尽",
-     "计算云"
-    ],
-    "header": {
-     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
-    }
-   }
+   "name": "王",
+   "type": 1,
+   "url": "http://122.228.84.103:7777/api/?key=4Dk5tdayvY6NZufEMG&url="
+  },
+  {
+   "name": "二",
+   "type": 1,
+   "url": "http://110.42.7.182:880/api/?key=7e84f07dc78fbb3406d64a1ab7d966b3&url="
+  },
+  {
+   "name": "小",
+   "type": 1,
+   "url": "http://43.136.176.188:91/api/?key=4ef232e96172b0bda78d393c695fe7c4&url="
   }
  ],
  "rules": [],
- "doh": [],
+ "doh": [
+  {
+   "name": "Cloudflare",
+   "url": "https://cloudflare-dns.com/dns-query",
+   "ips": [
+    "1.1.1.1",
+    "1.0.0.1"
+   ]
+  },
+  {
+   "name": "AdGuard",
+   "url": "https://dns.adguard.com/dns-query",
+   "ips": [
+    "94.140.14.140",
+    "94.140.14.141"
+   ]
+  }
+ ],
  "flags": [
   "youku",
   "qq",
@@ -36,7 +58,11 @@
   "pptv",
   "mgtv"
  ],
- "ads": [],
+ "ads": [
+  "mozai.4gtv.tv",
+  "pv.vipwm.cc",
+  "static-mozai.4gtv.tv"
+ ],
  "sites": [
   {
    "key": "首页",
